@@ -24,6 +24,7 @@ class PopUp extends React.Component
 
   componentDidMount()
   {
+    console.log(123)
     var date = new Date()
     var curDate = date.getFullYear()+'-'+((date.getMonth()+1).toString().padStart(2,0))+'-'+date.getDate().toString().padStart(2,0)+'T'+date.getHours().toString().padStart(2,0)+':'+(date.getMinutes()).toString().padStart(2,0)
     var due = date.getFullYear()+'-'+((date.getMonth()+1).toString().padStart(2,0))+'-'+date.getDate().toString().padStart(2,0)+'T'+(date.getHours()+1).toString().padStart(2,0)+':'+(date.getMinutes()).toString().padStart(2,0)
@@ -94,7 +95,7 @@ class PopUp extends React.Component
             <form noValidate>
               <TextField
                 id="datetime-local"
-                label="Next appointment"
+                label="Due"
                 type="datetime-local"
                 onChange={(e, val) => {this.handleChange("due", e)}}
                 InputLabelProps={{

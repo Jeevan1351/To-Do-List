@@ -1,6 +1,8 @@
 import './App.css';
 import { Component } from 'react';
 import PopUp from './PopUp';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Navbar} from 'react-bootstrap'
 
 class App extends Component
 {
@@ -33,6 +35,27 @@ class App extends Component
     })
   }
 
+  refresh = () => {
+    fetch(`http://localhost:4500/list`).then((value) =>{return value.json()})
+    .then((data)=>{
+      console.log(data)
+      this.setState({data})
+    })
+  }
+
+  drop = (item, id)=> {
+    var requestOptions = {
+      method: 'Delete',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        _id: item._id
+      }
+    )}
+    fetch("http://localhost:4500/delete", requestOptions)
+    .then(this.refresh())
+  }
+
+
   addNew = (newItem) => {
     var data = this.state.data
     console.log(newItem)
@@ -47,14 +70,23 @@ class App extends Component
     )}
     fetch(`http://localhost:4500/add`, requestOptions)
     .then((res)=>{return res.json()})
-    .then((element)=> data.push(element))
-    this.setState({data})
+    .then((element)=> {
+      data.push(element)
+      this.setState({data})
+    })
+    // this.refresh()
   }
 
   render()
   {
     return <>
-    <div>Hello! {this.state.user}</div>
+    <div className="body">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+          <Navbar.Brand ></Navbar.Brand>
+          <Navbar.Brand >To Do List!</Navbar.Brand>
+      </Navbar>
+
+    <div><h4>Hello! {this.state.user}</h4></div>
     {
       (this.state.data === [])?<>
       <div>Come on! Let's add some events to our list!</div>
@@ -65,6 +97,7 @@ class App extends Component
             title: {item.title}
             priority: {item.priority}
             due: {item.due}
+            <button onClick={()=> this.drop(item, id)}>Drop</button>
           </div>
       }):<></>
       }
@@ -74,6 +107,7 @@ class App extends Component
       <button onClick={this.togglePop}>New Event?</button>
     </div>
     {this.state.pop?<PopUp toggle={this.togglePop} addNew={this.addNew} />: null}
+    </div>
     </>
   }
 }

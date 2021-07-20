@@ -4,6 +4,7 @@ const {Item} = require("../models/items.schema")
 
 exports.get_list = (req, res)=> {
     Item.find().then((items) => {
+        console.log(items)
         res.send(items)
     }).catch((err) => {
         res.status(500).send()

@@ -2,7 +2,7 @@ import './App.css';
 import { Component } from 'react';
 import PopUp from './PopUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Navbar} from 'react-bootstrap'
+import {Navbar, Button} from 'react-bootstrap'
 
 class App extends Component
 {
@@ -86,27 +86,29 @@ class App extends Component
           <Navbar.Brand >To Do List!</Navbar.Brand>
       </Navbar>
 
-    <div><h4>Hello! {this.state.user}</h4></div>
-    {
-      (this.state.data === [])?<>
-      <div>Come on! Let's add some events to our list!</div>
-      </>:<>
-      { 
-        (this.state.data)?this.state.data.map((item, id) => {
-          return <div key={id} style={{border: "1px solid black"}}>
-            title: {item.title}
-            priority: {item.priority}
-            due: {item.due}
-            <button onClick={()=> this.drop(item, id)}>Drop</button>
-          </div>
-      }):<></>
+    <div className="Page">
+      <h4>Hello! {this.state.user}</h4>
+      {
+        (this.state.data === [])?<>
+        <div>Come on! Let's add some events to our list!</div>
+        </>:<>
+        { 
+          (this.state.data)?this.state.data.map((item, id) => {
+            return <div key={id} className="item">
+              <h4>{item.title}</h4>
+              <h6>priority: {item.priority}</h6>
+              <h6>due: {item.due}</h6>
+              <button onClick={()=> this.drop(item, id)}>Drop</button>
+            </div>
+        }):<></>
+        }
+        </>
       }
-      </>
-    }
-    <div className="btn">
-      <button onClick={this.togglePop}>New Event?</button>
-    </div>
-    {this.state.pop?<PopUp toggle={this.togglePop} addNew={this.addNew} />: null}
+      <div className="item">
+        <Button variant="outline-warning" onClick={this.togglePop}>+</Button>
+      </div>
+      {this.state.pop?<PopUp toggle={this.togglePop} addNew={this.addNew} />: null}
+      </div>
     </div>
     </>
   }

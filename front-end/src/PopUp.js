@@ -76,8 +76,8 @@ class PopUp extends React.Component
   render()
   {
     return (
-        <div className = "modal">
-            <div className = "modal_content">
+        <div className="pop">
+            <div className>
                 <span className="close" onClick={this.handleClick}>&times;</span>
                 <p>I am a pop up!</p>
             </div>

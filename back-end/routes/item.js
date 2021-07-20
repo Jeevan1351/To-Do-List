@@ -4,4 +4,6 @@ module.exports = app => {
     app.get("/list", item.get_list)
 
     app.post("/add", item.add_item)
+
+    app.delete("/delete", item.del_item)
 }

@@ -56,12 +56,22 @@ class App extends Component
     return <>
     <div>Hello! {this.state.user}</div>
     {
-      (this.state.data)?<>
+      (this.state.data === [])?<>
       <div>Come on! Let's add some events to our list!</div>
-      </>:<><div>Haha! you are fucked!</div></>
+      </>:<>
+      { 
+        (this.state.data)?this.state.data.map((item, id) => {
+          return <div key={id} style={{border: "1px solid black"}}>
+            title: {item.title}
+            priority: {item.priority}
+            due: {item.due}
+          </div>
+      }):<></>
+      }
+      </>
     }
-    <div className="btn" onClick={this.togglePop}>
-      <button>New Event?</button>
+    <div className="btn">
+      <button onClick={this.togglePop}>New Event?</button>
     </div>
     {this.state.pop?<PopUp toggle={this.togglePop} addNew={this.addNew} />: null}
     </>

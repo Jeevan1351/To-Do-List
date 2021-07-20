@@ -35,7 +35,19 @@ class App extends Component
 
   addNew = (newItem) => {
     var data = this.state.data
-    data.push(newItem)
+    console.log(newItem)
+    var requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        title: newItem.title,
+        due: newItem.due,
+        priority: newItem.priority
+      }
+    )}
+    fetch(`http://localhost:4500/add`, requestOptions)
+    .then((res)=>{return res.json()})
+    .then((element)=> data.push(element))
     this.setState({data})
   }
 

@@ -17,7 +17,8 @@ class PopUp extends React.Component
         priority: 4,
         due: null,
         titleError: null,
-        dueError: null
+        dueError: null,
+        curDate: ""
     }
   }
 
@@ -25,7 +26,8 @@ class PopUp extends React.Component
   {
     var date = new Date()
     var curDate = date.getFullYear()+'-'+((date.getMonth()+1).toString().padStart(2,0))+'-'+date.getDate().toString().padStart(2,0)+'T'+date.getHours().toString().padStart(2,0)+':'+(date.getMinutes()).toString().padStart(2,0)
-    this.setState({curDate})
+    var due = date.getFullYear()+'-'+((date.getMonth()+1).toString().padStart(2,0))+'-'+date.getDate().toString().padStart(2,0)+'T'+(date.getHours()+1).toString().padStart(2,0)+':'+(date.getMinutes()).toString().padStart(2,0)
+    this.setState({curDate, due})
   }
 
 
@@ -35,11 +37,12 @@ class PopUp extends React.Component
 
   handleSubmit = () => {
       if(this.validate()){
-          this.props.addNew(this.state)
-          this.handleClick()
+        var data = {title: this.state.title, priority: this.state.priority, due: this.state.due}
+        this.props.addNew(data)
+        this.handleClick()
       }
       else{
-          console.log("Correct input")
+          console.log("Correct the input")
       }
   }
 
@@ -56,14 +59,16 @@ class PopUp extends React.Component
 
   validate= ()=>{
       var stuff = this.state
-      if(stuff.title === null && stuff.title === ""){
+      console.log(stuff.title)
+      if(stuff.title === null){
         this.setState({titleError: true})
         return false
       }
-      if(!(parseInt(stuff.due.substring(0,4))>=parseInt(stuff.curDate).substring(0,4) && parseInt(stuff.due.substring(5,7))>=parseInt(stuff.curDate).substring(5,7) && parseInt(stuff.due.substring(8,10))>=parseInt(stuff.curDate).substring(8,10) && parseInt(stuff.due.substring(11,13))>=parseInt(stuff.curDate).substring(11,13) && parseInt(stuff.due.substring(14,16))>parseInt(stuff.curDate).substring(14,16))){
+      else if(!(parseInt(stuff.due.substring(0,4))>=parseInt((stuff.curDate).substring(0,4)) && parseInt(stuff.due.substring(5,7))>=parseInt((stuff.curDate).substring(5,7)) && parseInt(stuff.due.substring(8,10))>=parseInt((stuff.curDate).substring(8,10)) && parseInt(stuff.due.substring(11,13))>=parseInt((stuff.curDate).substring(11,13)) && parseInt(stuff.due.substring(14,16))>=parseInt((stuff.curDate).substring(14,16)))){
         this.setState({dueError: true})
         return false
       }
+      else return true
   }
 
 
@@ -91,7 +96,6 @@ class PopUp extends React.Component
                 id="datetime-local"
                 label="Next appointment"
                 type="datetime-local"
-                defaultValue="2021-07-20T22:36"
                 onChange={(e, val) => {this.handleChange("due", e)}}
                 InputLabelProps={{
                   shrink: true,

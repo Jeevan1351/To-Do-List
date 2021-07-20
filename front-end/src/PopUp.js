@@ -1,6 +1,10 @@
 // import './PopUp.css';
 import React from 'react';
 import Slider from '@material-ui/core/Slider'
+// import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+
 
 class PopUp extends React.Component
 {
@@ -17,6 +21,14 @@ class PopUp extends React.Component
     }
   }
 
+  componentDidMount()
+  {
+    var date = new Date()
+    var curDate = date.getFullYear()+'-'+((date.getMonth()+1).toString().padStart(2,0))+'-'+date.getDate().toString().padStart(2,0)+'T'+date.getHours().toString().padStart(2,0)+':'+(date.getMinutes()).toString().padStart(2,0)
+    this.setState({curDate})
+  }
+
+
   handleClick =() => {
       this.props.toggle()
   }
@@ -32,7 +44,7 @@ class PopUp extends React.Component
   }
 
   handleChange = (element, val)=> {
-    //   console.log(val.target.value)
+
     if(element === "title"){
         this.setState({title: val.target.value, titleError: null})
     }
@@ -44,10 +56,14 @@ class PopUp extends React.Component
 
   validate= ()=>{
       var stuff = this.state
-      if(stuff.title !== null && stuff.title !== "")
-        return true
-    this.setState({titleError: true})
-    return false
+      if(stuff.title === null && stuff.title === ""){
+        this.setState({titleError: true})
+        return false
+      }
+      if(!(parseInt(stuff.due.substring(0,4))>=parseInt(stuff.curDate).substring(0,4) && parseInt(stuff.due.substring(5,7))>=parseInt(stuff.curDate).substring(5,7) && parseInt(stuff.due.substring(8,10))>=parseInt(stuff.curDate).substring(8,10) && parseInt(stuff.due.substring(11,13))>=parseInt(stuff.curDate).substring(11,13) && parseInt(stuff.due.substring(14,16))>parseInt(stuff.curDate).substring(14,16))){
+        this.setState({dueError: true})
+        return false
+      }
   }
 
 
@@ -70,7 +86,18 @@ class PopUp extends React.Component
               min = {1}
               max = {10}
             />
-            <input type="text" onChange={(val)=> {this.handleChange("due", val)}}/>
+            <form noValidate>
+              <TextField
+                id="datetime-local"
+                label="Next appointment"
+                type="datetime-local"
+                defaultValue="2021-07-20T22:36"
+                onChange={(e, val) => {this.handleChange("due", e)}}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </form>
             <button onClick={this.handleSubmit}>Submit</button>
         </div>
     )

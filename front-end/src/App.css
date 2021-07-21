@@ -1,17 +1,45 @@
 .body{
   background-color: darkgrey;
+  margin: 0;
+  padding: 0;
   color: white;
 }
 
 .Page{
-  margin-left: 2%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
+.PageWrapper{
+  padding-left: 8%;
+}
+
+.buttons{
+  margin-top: 3%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%
+}
+
+
 .item{
-  margin: 1% 1% 1% 1%;
+  margin: 1%;
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 20%;
   padding: 2%;
   background-color: grey;
   border: 3px solid #ff8c00;
   border-radius: 5%;
+}
+
+.pop{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

@@ -77,13 +77,9 @@ class PopUp extends React.Component
   {
     return (
         <div className="pop">
-            <div className>
-                <span className="close" onClick={this.handleClick}>&times;</span>
-                <p>I am a pop up!</p>
-            </div>
-            <input type="text" onChange={(val)=> {this.handleChange("title", val)}}/>
+            <input type="text" onChange={(val)=> {this.handleChange("title", val)}} placeholder="Task Name"/>
             <Slider
-              style={{width: "10%"}}
+              style={{width: "80%"}}
               defaultValue={4}
               valueLabelDisplay="auto"
               step = {1}
@@ -103,8 +99,11 @@ class PopUp extends React.Component
                 }}
               />
             </form>
-            <button onClick={this.handleSubmit}>Submit</button>
-        </div>
+            <div className="buttons">
+              <button className="spacingr"onClick={this.handleClick} >Cancel</button>
+              <button className="spacingl" onClick={this.handleSubmit}>Submit</button>
+            </div>
+          </div>
     )
   }
 }

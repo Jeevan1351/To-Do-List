@@ -4,6 +4,7 @@ import PopUp from './PopUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar, Button} from 'react-bootstrap'
 
+
 class App extends Component
 {
   constructor(props)
@@ -85,9 +86,9 @@ class App extends Component
           <Navbar.Brand ></Navbar.Brand>
           <Navbar.Brand >To Do List!</Navbar.Brand>
       </Navbar>
-
-    <div className="Page">
-      <h4>Hello! {this.state.user}</h4>
+    <h4>Hello! {this.state.user}</h4>
+    <div className="PageWrapper">
+      <div className="Page">
       {
         (this.state.data === [])?<>
         <div>Come on! Let's add some events to our list!</div>
@@ -98,16 +99,17 @@ class App extends Component
               <h4>{item.title}</h4>
               <h6>priority: {item.priority}</h6>
               <h6>due: {item.due}</h6>
-              <button onClick={()=> this.drop(item, id)}>Drop</button>
+              <button onClick={()=> this.drop(item, id)}>Finished!</button>
             </div>
         }):<></>
         }
         </>
       }
       <div className="item">
-        <Button variant="outline-warning" onClick={this.togglePop}>+</Button>
+        {this.state.pop?<PopUp toggle={this.togglePop} addNew={this.addNew} />: null}
+        <Button variant="outline-warning" onClick={this.togglePop} style={{display: (this.state.pop)?"none":"block"}}>+</Button>
       </div>
-      {this.state.pop?<PopUp toggle={this.togglePop} addNew={this.addNew} />: null}
+      </div>
       </div>
     </div>
     </>

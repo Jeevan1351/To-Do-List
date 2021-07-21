@@ -1,7 +1,7 @@
 // import './PopUp.css';
 import React from 'react';
 import Slider from '@material-ui/core/Slider'
-// import { makeStyles } from '@material-ui/core/styles';
+import { Button } from 'react-bootstrap'
 import TextField from '@material-ui/core/TextField';
 
 
@@ -78,16 +78,19 @@ class PopUp extends React.Component
     return (
         <div className="pop">
             <input type="text" onChange={(val)=> {this.handleChange("title", val)}} placeholder="Task Name"/>
-            <Slider
-              style={{width: "80%"}}
-              defaultValue={4}
-              valueLabelDisplay="auto"
-              step = {1}
-              onChange={(e, val) => {this.handleChange("priority", val)}}
-              marks
-              min = {1}
-              max = {10}
-            />
+            <div className="flexit">
+              <lable style={{marginRight: "5%"}}>Priority</lable>
+              <Slider
+                style={{width: "80%"}}
+                defaultValue={4}
+                valueLabelDisplay="auto"
+                step = {1}
+                onChange={(e, val) => {this.handleChange("priority", val)}}
+                marks
+                min = {1}
+                max = {10}
+              />
+            </div>
             <form noValidate>
               <TextField
                 id="datetime-local"
@@ -100,8 +103,10 @@ class PopUp extends React.Component
               />
             </form>
             <div className="buttons">
-              <button className="spacingr"onClick={this.handleClick} >Cancel</button>
-              <button className="spacingl" onClick={this.handleSubmit}>Submit</button>
+            <Button variant="outline-warning" className="spacingr"onClick={this.handleClick}>Cancel</Button>
+              {/* <button className="spacingr"onClick={this.handleClick} >Cancel</button> */}
+              <Button variant="outline-warning" onClick={this.handleSubmit}>Submit</Button>
+              {/* <button className="spacingl" onClick={this.handleSubmit}>Submit</button> */}
             </div>
           </div>
     )

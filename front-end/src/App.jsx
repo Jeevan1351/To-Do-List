@@ -99,7 +99,7 @@ class App extends Component
               <h4>{item.title}</h4>
               <h6>priority: {item.priority}</h6>
               <h6>due: {item.due}</h6>
-              <button onClick={()=> this.drop(item, id)}>Finished!</button>
+              <Button variant="outline-warning" onClick={()=> this.drop(item, id)}>Finished!</Button>
             </div>
         }):<></>
         }
